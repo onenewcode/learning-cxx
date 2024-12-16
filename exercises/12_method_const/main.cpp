@@ -5,7 +5,16 @@
 struct Fibonacci {
     int numbers[11];
     // TODO: 修改方法签名和实现，使测试通过
-    int get(int i) {
+    // 将 get 成员函数标记为 constexpr 以便可以在编译期求值
+    constexpr int get(int i) const { // 注意这里的 const 关键字
+        if (i >= 0 && i < 11) {
+            return numbers[i];
+        } else {
+            // 如果索引超出范围，可以抛出异常或返回一个特定值。
+            // 在这里，我们简单地返回 -1 表示错误。
+            // 对于 constexpr 函数，抛出异常是不允许的。
+            return -1;
+        }
     }
 };
 

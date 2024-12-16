@@ -13,17 +13,44 @@ class Fibonacci {
     int cached;
 
 public:
-    // TODO: 实现构造器
-    // Fibonacci()
+    // 构造器，初始化cache数组为0，并设置cached为0。
+    Fibonacci() : cached(0) {
+        for (size_t &val : cache) {
+            val = 0;
+        }
+    }
 
-    // TODO: 实现正确的缓存优化斐波那契计算
+    // 计算并返回第i个斐波那契数（假设索引从0开始，即fib(0)=0, fib(1)=1）。
     size_t get(int i) {
-        for (; false; ++cached) {
+        // 如果请求的索引超过了我们想要缓存的最大数量，则抛出异常或返回错误值。
+        if (i >= 16) {
+            throw std::out_of_range("Index out of range for Fibonacci cache");
+        }
+
+        // 如果已经缓存了所需的斐波那契数，则直接返回它。
+        if (i < cached) {
+            return cache[i];
+        }
+
+        // 初始化缓存，如果还没有进行过。
+        if (cached == 0) {
+            cache[0] = 0;
+            cached++;
+        }
+        if (cached == 1) {
+            cache[1] = 1;
+            cached++;
+        }
+
+        // 计算剩余未缓存的斐波那契数。
+        for (; cached <= i; ++cached) {
             cache[cached] = cache[cached - 1] + cache[cached - 2];
         }
+
         return cache[i];
     }
 };
+
 
 int main(int argc, char **argv) {
     // 现在类型拥有无参构造器，声明时会直接调用。
